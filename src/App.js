@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // Pages
 import { FirebaseTestingPage, LandingPage } from "./components/pages";
 
@@ -6,12 +7,8 @@ import { FirebaseTestingPage, LandingPage } from "./components/pages";
 import app from "./firebase";
 import { getAuth } from "firebase/auth";
 
-// bulma components
-import { Button, Section } from "reactbulma";
-
 const App = () => {
     const auth = getAuth(app);
-    const [showLanding, setShowLanding] = useState(false);
     const [loggedIn, setisLoggedIn] = useState(false);
     const [user, setUser] = useState({});
 
@@ -40,23 +37,12 @@ const App = () => {
     }, []);
 
     return (
-        <div className="container">
-            <Section>
-                <h1>This is the app container</h1>
-                <Button primary onClick={() => setShowLanding((prev) => !prev)}>
-                    Change showLanding
-                </Button>
-                <h3>
-                    {loggedIn
-                        ? `User Logged in, ${user.email}`
-                        : "No one logged in"}
-                </h3>
-            </Section>
-
-            <Section>
-                {showLanding ? <LandingPage /> : <FirebaseTestingPage />}
-            </Section>
-        </div>
+        <Router>
+            <Switch>
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/testing" component={FirebaseTestingPage} />
+            </Switch>
+        </Router>
     );
 };
 
