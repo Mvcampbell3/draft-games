@@ -6,9 +6,11 @@ import { FirebaseTestingPage, LandingPage } from "./components/pages";
 import app from "./firebase";
 import { getAuth } from "firebase/auth";
 
+import { Button } from "reactbulma";
+
 const App = () => {
     const auth = getAuth(app);
-    const [showLanding, setShowLanding] = useState(false);
+    const [showLanding, setShowLanding] = useState(true);
     const [loggedIn, setisLoggedIn] = useState(false);
     const [user, setUser] = useState({});
 
@@ -39,9 +41,9 @@ const App = () => {
     return (
         <div className="app-container">
             <h1>This is the app container</h1>
-            <button onClick={() => setShowLanding((prev) => !prev)}>
+            <Button primary onClick={() => setShowLanding((prev) => !prev)}>
                 Change showLanding
-            </button>
+            </Button>
             {showLanding ? <LandingPage /> : <FirebaseTestingPage />}
             <h3>
                 {loggedIn
