@@ -15,11 +15,8 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase();
 
 // This is the example set function
-export function writeUserData(userId, name, email) {
-    set(ref(db, "users/" + userId), {
-        username: name,
-        email: email,
-    });
+export function writeUserData(userId, userObject) {
+    set(ref(db, "users/" + userId), userObject);
 }
 /**
  * @name listenToDatabase
@@ -32,17 +29,17 @@ export function listenToDatabase(path, callback) {
     onValue(dbRef, (snapshot) => {
         const data = snapshot.val();
         callback(data);
-    })
+    });
 }
 
 /**
  * @name cleanUpDatabase
  * @description unsubscribe from an existing onValue observer
- * @param {string} path reference path to the database 
+ * @param {string} path reference path to the database
  */
 export function cleanUpDatabase(path) {
     const dbRef = ref(db, path);
-    off(dbRef, "value")
+    off(dbRef, "value");
 }
 
 export default app;
