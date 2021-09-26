@@ -17,6 +17,14 @@ import {
 
 import { defaultUser } from "../../../firebase/defaultValues";
 
+// Components
+
+import Input from "../../common/Input";
+
+// Bulma Components
+
+import {Button } from "reactbulma";
+
 const FirebaseTestingPage = () => {
     // callback function on what to do with the data we get back
     // passed to the listen function
@@ -74,13 +82,13 @@ const FirebaseTestingPage = () => {
     };
 
     return (
-        <div className="page-container">
+        <div className="page-container content">
             <h1>This is the firebase testing page</h1>
             <h2>Create User</h2>
             <form onSubmit={handleCreateSubmit}>
                 <div className="field-group">
-                    <label htmlFor="email">Email</label>
-                    <input
+                    <Input
+                        label="Email"
                         type="email"
                         id="email"
                         onChange={(e) => setEmail(e.target.value)}
@@ -88,8 +96,8 @@ const FirebaseTestingPage = () => {
                     />
                 </div>
                 <div className="field-group">
-                    <label htmlFor="password">Password</label>
-                    <input
+                    <Input
+                        label="Password"
                         type="password"
                         id="password"
                         onChange={(e) => setPassword(e.target.value)}
@@ -97,7 +105,7 @@ const FirebaseTestingPage = () => {
                     />
                 </div>
                 <div className="field-group">
-                    <input type="submit" value="Send" />
+                    <Button type="submit">Send</Button>
                 </div>
             </form>
 
@@ -105,8 +113,8 @@ const FirebaseTestingPage = () => {
 
             <form onSubmit={handleLoginSubmit}>
                 <div className="field-group">
-                    <label htmlFor="email-login">Email</label>
-                    <input
+                    <Input
+                        label="Email"
                         type="email"
                         id="email-login"
                         onChange={(e) => setEmail(e.target.value)}
@@ -114,8 +122,8 @@ const FirebaseTestingPage = () => {
                     />
                 </div>
                 <div className="field-group">
-                    <label htmlFor="password-login">Password</label>
-                    <input
+                    <Input
+                        label="Password"
                         type="password"
                         id="password-login"
                         onChange={(e) => setPassword(e.target.value)}
@@ -123,7 +131,7 @@ const FirebaseTestingPage = () => {
                     />
                 </div>
                 <div className="field-group">
-                    <input type="submit" value="Send" />
+                    <Button type="submit">Send</Button>
                 </div>
             </form>
         </div>
