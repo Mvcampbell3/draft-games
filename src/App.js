@@ -1,22 +1,19 @@
-import React from 'react';
+import React, { useState } from "react";
 // Pages
-import { LandingPage } from './components/pages';
-
-// firebase
-import firebase from './firebase';
+import { FirebaseTestingPage, LandingPage } from "./components/pages";
 
 const App = () => {
+    const [showLanding, setShowLanding] = useState(true);
 
-    const test = firebase.getApps();
-    console.log({test: test[0]._options})
-
-
-    return ( 
+    return (
         <div className="app-container">
             <h1>This is the app container</h1>
-            <LandingPage />
+            <button onClick={() => setShowLanding((prev) => !prev)}>
+                Change showLanding
+            </button>
+            {showLanding ? <LandingPage /> : <FirebaseTestingPage />}
         </div>
-     );
-}
- 
+    );
+};
+
 export default App;
