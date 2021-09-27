@@ -1,16 +1,16 @@
-import React, { useRef } from "react";
+import React from "react";
 import "./Input.scss";
 
-import { Field, Input as BulmaInput, Control } from "reactbulma";
+import { Form } from "react-bulma-components";
 
 const Input = ({ label = "", id = "", ...props }) => {
     return (
-        <Field className="mb-4">
+        <Form.Field className="mb-4">
             <label htmlFor={id}>{label}</label>
-            <Control>
-                <BulmaInput id={id} {...props} />
-            </Control>
-        </Field>
+            <Form.Control>
+                <Form.Input id={id} {...props} />
+            </Form.Control>
+        </Form.Field>
     );
 };
 

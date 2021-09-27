@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./FirebaseTestingPage.scss";
 
 // Firebase Functions
@@ -22,8 +23,15 @@ import { defaultUser } from "../../../firebase/defaultValues";
 import Input from "../../common/Input";
 
 // Bulma Components
-
-import {Button } from "reactbulma";
+import {
+    Button,
+    Container,
+    Box,
+    Level,
+    Hero,
+    Heading,
+    Tabs,
+} from "react-bulma-components";
 
 const FirebaseTestingPage = () => {
     // callback function on what to do with the data we get back
@@ -52,16 +60,18 @@ const FirebaseTestingPage = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [displayLogin, setDisplayLogin] = useState(true);
 
     const handleCreateSubmit = (e) => {
         e.preventDefault();
-        if (email && password) {
+        if (email && password && username) {
             createUserWithEmailAndPassword(auth, email, password)
                 .then((result) => {
                     const {
                         user: { uid },
                     } = result;
-                    const userItem = defaultUser({ email, id: uid });
+                    const userItem = defaultUser({ email, username, id: uid });
                     writeUserData(uid, userItem);
                 })
                 .catch((err) => console.log({ err }));
@@ -81,60 +91,158 @@ const FirebaseTestingPage = () => {
         }
     };
 
+    const handleFormToggle = (e) => {
+        e.preventDefault();
+        setDisplayLogin((prev) => !prev);
+    };
+
     return (
-        <div className="page-container content">
-            <h1>This is the firebase testing page</h1>
-            <h2>Create User</h2>
-            <form onSubmit={handleCreateSubmit}>
-                <div className="field-group">
-                    <Input
-                        label="Email"
-                        type="email"
-                        id="email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                    />
-                </div>
-                <div className="field-group">
-                    <Input
-                        label="Password"
-                        type="password"
-                        id="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                    />
-                </div>
-                <div className="field-group">
-                    <Button type="submit">Send</Button>
-                </div>
-            </form>
+        <>
+            <Hero color="dark" className="mb-4">
+                <Hero.Body>
+                    <Container>
+                        <Heading>Testing Page</Heading>
+                        <Heading>Eventually there will be stuff here</Heading>
+                    </Container>
+                </Hero.Body>
+                <Hero.Footer>
+                    <Tabs type="boxed" fullwidth>
+                        <Container>
+                            <ul>
+                                <li className="active">
+                                    <Link to="/">Home</Link>
+                                </li>
+                                <li>
+                                    <Link to="/testing">Testing Page</Link>
+                                </li>
+                            </ul>
+                        </Container>
+                    </Tabs>
+                </Hero.Footer>
+            </Hero>
+            <Container>
+                <div className="page-container">
+                    {displayLogin ? (
+                        <Box>
+                            <h2>Sign In</h2>
 
-            <h2>Sign In</h2>
+                            <form onSubmit={handleLoginSubmit}>
+                                <div className="field-group">
+                                    <Input
+                                        label="Email"
+                                        type="email"
+                                        id="email-login"
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                        value={email}
+                                    />
+                                </div>
+                                <div className="field-group">
+                                    <Input
+                                        label="Password"
+                                        type="password"
+                                        id="password-login"
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                        value={password}
+                                    />
+                                </div>
+                                <div className="field-group">
+                                    <Level>
+                                        <Level.Side align="left">
+                                            <Level.Item>
+                                                <Button
+                                                    color="dark"
+                                                    type="submit"
+                                                >
+                                                    Send
+                                                </Button>
+                                            </Level.Item>
+                                        </Level.Side>
+                                        <Level.Side align="right">
+                                            <Level.Item>
+                                                <Button
+                                                    color="light"
+                                                    onClick={handleFormToggle}
+                                                >
+                                                    Not a user yet?
+                                                </Button>
+                                            </Level.Item>
+                                        </Level.Side>
+                                    </Level>
+                                </div>
+                            </form>
+                        </Box>
+                    ) : (
+                        <Box>
+                            <h2>Create User</h2>
 
-            <form onSubmit={handleLoginSubmit}>
-                <div className="field-group">
-                    <Input
-                        label="Email"
-                        type="email"
-                        id="email-login"
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                    />
+                            <form onSubmit={handleCreateSubmit}>
+                                <div className="field-group">
+                                    <Input
+                                        label="Email"
+                                        type="email"
+                                        id="email"
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                        value={email}
+                                    />
+                                </div>
+                                <div className="field-group">
+                                    <Input
+                                        label="Username"
+                                        type="text"
+                                        id="username"
+                                        onChange={(e) =>
+                                            setUsername(e.target.value)
+                                        }
+                                        value={username}
+                                    />
+                                </div>
+                                <div className="field-group">
+                                    <Input
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                        value={password}
+                                    />
+                                </div>
+                                <div className="field-group">
+                                    <Level>
+                                        <Level.Side align="left">
+                                            <Level.Item>
+                                                <Button
+                                                    color="dark"
+                                                    type="submit"
+                                                >
+                                                    Send
+                                                </Button>
+                                            </Level.Item>
+                                        </Level.Side>
+                                        <Level.Side align="right">
+                                            <Level.Item>
+                                                <Button
+                                                    color="light"
+                                                    onClick={handleFormToggle}
+                                                >
+                                                    Already a user?
+                                                </Button>
+                                            </Level.Item>
+                                        </Level.Side>
+                                    </Level>
+                                </div>
+                            </form>
+                        </Box>
+                    )}
                 </div>
-                <div className="field-group">
-                    <Input
-                        label="Password"
-                        type="password"
-                        id="password-login"
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                    />
-                </div>
-                <div className="field-group">
-                    <Button type="submit">Send</Button>
-                </div>
-            </form>
-        </div>
+            </Container>
+        </>
     );
 };
 

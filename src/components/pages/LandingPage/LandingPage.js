@@ -1,20 +1,20 @@
 import React from "react";
 import "./LandingPage.scss";
 import { Link } from "react-router-dom";
-import { Hero, Container, Title, SubTitle, Tabs } from "reactbulma";
+import { Hero, Container, Heading, Tabs } from "react-bulma-components";
 
 const LandingPage = () => {
     return (
         <div className="page-container">
-            <Hero light>
+            <Hero color="dark">
                 <Hero.Body>
                     <Container>
-                        <Title>This is the Landing Page</Title>
-                        <SubTitle>Eventually there will be stuff here</SubTitle>
+                        <Heading>This is the Landing Page</Heading>
+                        <Heading>Eventually there will be stuff here</Heading>
                     </Container>
                 </Hero.Body>
-                <Hero.Foot>
-                    <Tabs boxed fullwidth>
+                <Hero.Footer>
+                    <Tabs type="boxed" fullwidth>
                         <Container>
                             <ul>
                                 <li className="active">
@@ -26,7 +26,7 @@ const LandingPage = () => {
                             </ul>
                         </Container>
                     </Tabs>
-                </Hero.Foot>
+                </Hero.Footer>
             </Hero>
         </div>
     );

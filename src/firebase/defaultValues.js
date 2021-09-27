@@ -1,12 +1,6 @@
-export const defaultUser = ({
-    first_name = "",
-    last_name = "",
-    email = "",
-    id = "",
-}) => {
+export const defaultUser = ({ username = "", email = "", id = "" }) => {
     return {
-        first_name,
-        last_name,
+        username,
         email,
         id,
     };
