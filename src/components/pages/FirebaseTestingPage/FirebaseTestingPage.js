@@ -21,6 +21,7 @@ import { defaultUser } from "../../../firebase/defaultValues";
 // Components
 
 import Input from "../../common/Input";
+import PageTop from "../../common/PageTop";
 
 // Bulma Components
 import {
@@ -98,28 +99,11 @@ const FirebaseTestingPage = () => {
 
     return (
         <>
-            <Hero color="dark" className="mb-4">
-                <Hero.Body>
-                    <Container>
-                        <Heading>Testing Page</Heading>
-                        <Heading>Eventually there will be stuff here</Heading>
-                    </Container>
-                </Hero.Body>
-                <Hero.Footer>
-                    <Tabs type="boxed" fullwidth>
-                        <Container>
-                            <ul>
-                                <li className="active">
-                                    <Link to="/">Home</Link>
-                                </li>
-                                <li>
-                                    <Link to="/testing">Testing Page</Link>
-                                </li>
-                            </ul>
-                        </Container>
-                    </Tabs>
-                </Hero.Footer>
-            </Hero>
+            <PageTop
+                title="Testing Page"
+                subtitle="For the moment, it is just auth stuff"
+                color="primary"
+            />
             <Container>
                 <div className="page-container">
                     {displayLogin ? (
