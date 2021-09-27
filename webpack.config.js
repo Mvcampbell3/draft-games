@@ -1,9 +1,9 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
-const webpack = require('webpack')
+const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const dotenv = require("dotenv");
+const Dotenv = require("dotenv-webpack");
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -27,8 +27,9 @@ const config = {
 
         // Add your plugins here
 
-        new webpack.DefinePlugin({
-            "process.env": JSON.stringify(dotenv.config().parsed),
+        new Dotenv({
+            systemvars: true,
+            ignoreStub: true,
         }),
 
         // Learn more about plugins from https://webpack.js.org/configuration/plugins/
