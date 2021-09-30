@@ -13,6 +13,7 @@ const PageTop = ({
 
     const links = [
         { to: "/", name: "Home", active: pathname === "/" },
+        { to: "/create", name: "Create Game", active: pathname === "/create" },
         { to: "/testing", name: "Testing", active: pathname === "/testing" },
     ];
 

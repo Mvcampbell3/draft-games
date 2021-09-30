@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { setUser } from "./redux/actions";
 
 // Pages
-import { FirebaseTestingPage, LandingPage } from "./components/pages";
+import {
+    FirebaseTestingPage,
+    LandingPage,
+    CreateGamePage,
+} from "./components/pages";
 
 // firebase auth
 import app from "./firebase";
@@ -48,6 +52,7 @@ const App = ({ setUser }) => {
             <Switch>
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/testing" component={FirebaseTestingPage} />
+                <Route exact path="/create" component={CreateGamePage} />
             </Switch>
         </Router>
     );
