@@ -10,20 +10,25 @@ import { FirebaseTestingPage, LandingPage } from "./components/pages";
 import app from "./firebase";
 import { getAuth } from "firebase/auth";
 
-const App = ({ user = {}, setUser }) => {
+const App = ({ setUser }) => {
     const auth = getAuth(app);
-    const [loggedIn, setisLoggedIn] = useState(false);
+
+    // const handleSignOut = () => {
+    //     auth.signOut();
+    // };
 
     useEffect(() => {
         const unsubscribeUser = auth.onAuthStateChanged(
             (user) => {
                 console.log("user changed", { user });
                 if (user) {
-                    setisLoggedIn(true);
-                    setUser(user);
+                    setUser({
+                        loggedIn: true,
+                        email: user.email,
+                        id: user.uid,
+                    });
                 } else {
-                    setisLoggedIn(false);
-                    setUser({});
+                    setUser({ loggedIn: false });
                 }
             },
             (err) => {
@@ -50,12 +55,8 @@ const App = ({ user = {}, setUser }) => {
 
 const mapStateToProps = (state) => {
     console.log({ state });
-    const {
-        appState: { user },
-    } = state;
-    return {
-        user,
-    };
+
+    return {};
 };
 
 const mapDispatchToProps = {
