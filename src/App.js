@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUser } from "./redux/actions";
+
 // Pages
 import { FirebaseTestingPage, LandingPage } from "./components/pages";
 
@@ -7,10 +10,9 @@ import { FirebaseTestingPage, LandingPage } from "./components/pages";
 import app from "./firebase";
 import { getAuth } from "firebase/auth";
 
-const App = () => {
+const App = ({ user = {}, setUser }) => {
     const auth = getAuth(app);
     const [loggedIn, setisLoggedIn] = useState(false);
-    const [user, setUser] = useState({});
 
     useEffect(() => {
         const unsubscribeUser = auth.onAuthStateChanged(
@@ -46,4 +48,18 @@ const App = () => {
     );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+    console.log({ state });
+    const {
+        appState: { user },
+    } = state;
+    return {
+        user,
+    };
+};
+
+const mapDispatchToProps = {
+    setUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
