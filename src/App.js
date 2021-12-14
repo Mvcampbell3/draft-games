@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser } from "./redux/actions";
@@ -16,11 +16,7 @@ import { getAuth } from "firebase/auth";
 
 const App = ({ setUser }) => {
     const auth = getAuth(app);
-
-    // const handleSignOut = () => {
-    //     auth.signOut();
-    // };
-
+    
     useEffect(() => {
         const unsubscribeUser = auth.onAuthStateChanged(
             (user) => {
@@ -58,9 +54,7 @@ const App = ({ setUser }) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    console.log({ state });
-
+const mapStateToProps = () => {
     return {};
 };
 
