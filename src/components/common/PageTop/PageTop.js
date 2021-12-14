@@ -1,9 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import { Link, useLocation } from "react-router-dom";
 import { Hero, Container, Tabs, Heading } from "react-bulma-components";
 import "./PageTop.scss";
 
 const PageTop = ({
+    loggedIn = false,
     title = "Title",
     subtitle = "Subtitle",
     color = "dark ",
@@ -12,9 +15,19 @@ const PageTop = ({
     const { pathname } = location;
 
     const links = [
-        { to: "/", name: "Home", active: pathname === "/" },
-        { to: "/create", name: "Create Game", active: pathname === "/create" },
-        { to: "/testing", name: "Testing", active: pathname === "/testing" },
+        { to: "/", name: "Home", active: pathname === "/", display: true },
+        {
+            to: "/create",
+            name: "Create Game",
+            active: pathname === "/create",
+            display: loggedIn,
+        },
+        {
+            to: "/testing",
+            name: "Testing",
+            active: pathname === "/testing",
+            display: true,
+        },
     ];
 
     return (
@@ -29,14 +42,18 @@ const PageTop = ({
                 <Tabs type="boxed" fullwidth>
                     <Container>
                         <ul>
-                            {links.map((link, i) => (
-                                <li
-                                    key={i}
-                                    className={link.active ? "is-active" : ""}
-                                >
-                                    <Link to={link.to}>{link.name}</Link>
-                                </li>
-                            ))}
+                            {links
+                                .filter((link) => link.display)
+                                .map((link, i) => (
+                                    <li
+                                        key={i}
+                                        className={
+                                            link.active ? "is-active" : ""
+                                        }
+                                    >
+                                        <Link to={link.to}>{link.name}</Link>
+                                    </li>
+                                ))}
                         </ul>
                     </Container>
                 </Tabs>
@@ -45,4 +62,13 @@ const PageTop = ({
     );
 };
 
-export default PageTop;
+const mapStateToProps = (state, ownProps) => {
+    const {
+        appState: {
+            user: { loggedIn },
+        },
+    } = state;
+    return { loggedIn, ...ownProps };
+};
+
+export default connect(mapStateToProps)(PageTop);
