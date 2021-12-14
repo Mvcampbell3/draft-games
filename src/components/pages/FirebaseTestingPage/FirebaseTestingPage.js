@@ -102,7 +102,7 @@ const FirebaseTestingPage = () => {
             <PageTop
                 title="Testing Page"
                 subtitle="For the moment, it is just auth stuff"
-                color="primary"
+                color="info"
             />
             <Container>
                 <div className="page-container">

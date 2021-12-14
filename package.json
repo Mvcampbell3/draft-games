@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
@@ -28,7 +29,9 @@
     "react": "^17.0.2",
     "react-bulma-components": "^4.0.7",
     "react-dom": "^17.0.2",
-    "react-router-dom": "^5.3.0"
+    "react-redux": "^7.2.5",
+    "react-router-dom": "^5.3.0",
+    "redux": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
