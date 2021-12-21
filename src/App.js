@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { setUser } from "./redux/actions";
+import { setUser, setLoginModalOpen } from "./redux/actions";
 
 // Pages
 import {
@@ -10,13 +10,16 @@ import {
     CreateGamePage,
 } from "./components/pages";
 
+// Global Components
+import Modal from "./components/common/Modal";
+
 // firebase auth
 import app from "./firebase";
 import { getAuth } from "firebase/auth";
 
-const App = ({ setUser }) => {
+const App = ({ setUser, loginModalOpen = false, setLoginModalOpen }) => {
     const auth = getAuth(app);
-    
+
     useEffect(() => {
         const unsubscribeUser = auth.onAuthStateChanged(
             (user) => {
@@ -43,8 +46,16 @@ const App = ({ setUser }) => {
         };
     }, []);
 
+    const handleLoginModalClose = () => {
+        setLoginModalOpen(false);
+    };
+
     return (
         <Router>
+            {/* Login Modal */}
+            <Modal show={loginModalOpen} handleClose={handleLoginModalClose}>
+                <p>This will be the login modal component</p>
+            </Modal>
             <Switch>
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/testing" component={FirebaseTestingPage} />
@@ -54,12 +65,16 @@ const App = ({ setUser }) => {
     );
 };
 
-const mapStateToProps = () => {
-    return {};
+const mapStateToProps = (state) => {
+    const {
+        appState: { loginModalOpen },
+    } = state;
+    return { loginModalOpen };
 };
 
 const mapDispatchToProps = {
     setUser,
+    setLoginModalOpen,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

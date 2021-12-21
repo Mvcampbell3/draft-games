@@ -1,15 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import { setLoginModalOpen } from "../../../redux/actions";
 import { Link, useLocation } from "react-router-dom";
-import { Hero, Container, Tabs, Heading } from "react-bulma-components";
+import { Hero, Container, Tabs, Heading, Button } from "react-bulma-components";
 import "./PageTop.scss";
 
 const PageTop = ({
-    loggedIn = false,
     title = "Title",
     subtitle = "Subtitle",
     color = "dark ",
+    // redux
+    loggedIn = false,
+    setLoginModalOpen,
 }) => {
     const location = useLocation();
     const { pathname } = location;
@@ -30,12 +32,23 @@ const PageTop = ({
         },
     ];
 
+    const handleLoginClick = () => {
+        setLoginModalOpen(true);
+    };
+
     return (
         <Hero color={color} className="mb-4">
             <Hero.Body>
                 <Container>
-                    <Heading>{title}</Heading>
-                    <Heading subtitle>{subtitle}</Heading>
+                    <div className="flex-container">
+                        <div className="flex-container--left">
+                            <Heading>{title}</Heading>
+                            <Heading subtitle>{subtitle}</Heading>
+                        </div>
+                        <div className="flex-container--right">
+                            <Button onClick={handleLoginClick}>Login</Button>
+                        </div>
+                    </div>
                 </Container>
             </Hero.Body>
             <Hero.Footer>
@@ -71,4 +84,6 @@ const mapStateToProps = (state, ownProps) => {
     return { loggedIn, ...ownProps };
 };
 
-export default connect(mapStateToProps)(PageTop);
+const mapDispatchToProps = { setLoginModalOpen };
+
+export default connect(mapStateToProps, mapDispatchToProps)(PageTop);
