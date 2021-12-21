@@ -12,6 +12,7 @@ import {
 
 // Global Components
 import Modal from "./components/common/Modal";
+import LoginModalContent from "./components/common/LoginModalContent";
 
 // firebase auth
 import app from "./firebase";
@@ -54,7 +55,7 @@ const App = ({ setUser, loginModalOpen = false, setLoginModalOpen }) => {
         <Router>
             {/* Login Modal */}
             <Modal show={loginModalOpen} handleClose={handleLoginModalClose}>
-                <p>This will be the login modal component</p>
+                <LoginModalContent />
             </Modal>
             <Switch>
                 <Route exact path="/" component={LandingPage} />
