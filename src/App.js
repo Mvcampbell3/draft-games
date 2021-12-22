@@ -5,7 +5,6 @@ import { setUser, setLoginModalOpen } from "./redux/actions";
 
 // Pages
 import {
-    FirebaseTestingPage,
     LandingPage,
     CreateGamePage,
 } from "./components/pages";
@@ -59,7 +58,6 @@ const App = ({ setUser, loginModalOpen = false, setLoginModalOpen }) => {
             </Modal>
             <Switch>
                 <Route exact path="/" component={LandingPage} />
-                <Route exact path="/testing" component={FirebaseTestingPage} />
                 <Route exact path="/create" component={CreateGamePage} />
             </Switch>
         </Router>

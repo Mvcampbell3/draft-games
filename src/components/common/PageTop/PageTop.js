@@ -26,12 +26,6 @@ const PageTop = ({
             active: pathname === "/create",
             display: loggedIn,
         },
-        {
-            to: "/testing",
-            name: "Testing",
-            active: pathname === "/testing",
-            display: true,
-        },
     ];
 
     const handleLoginClick = () => {
@@ -65,26 +59,30 @@ const PageTop = ({
                     </div>
                 </Container>
             </Hero.Body>
-            <Hero.Footer>
-                <Tabs type="boxed" fullwidth>
-                    <Container>
-                        <ul>
-                            {links
-                                .filter((link) => link.display)
-                                .map((link, i) => (
-                                    <li
-                                        key={i}
-                                        className={
-                                            link.active ? "is-active" : ""
-                                        }
-                                    >
-                                        <Link to={link.to}>{link.name}</Link>
-                                    </li>
-                                ))}
-                        </ul>
-                    </Container>
-                </Tabs>
-            </Hero.Footer>
+            {links.filter((link) => link.display).length > 1 && (
+                <Hero.Footer>
+                    <Tabs type="boxed" fullwidth>
+                        <Container>
+                            <ul>
+                                {links
+                                    .filter((link) => link.display)
+                                    .map((link, i) => (
+                                        <li
+                                            key={i}
+                                            className={
+                                                link.active ? "is-active" : ""
+                                            }
+                                        >
+                                            <Link to={link.to}>
+                                                {link.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                            </ul>
+                        </Container>
+                    </Tabs>
+                </Hero.Footer>
+            )}
         </Hero>
     );
 };
