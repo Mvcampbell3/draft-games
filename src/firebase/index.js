@@ -26,10 +26,16 @@ export function writeUserData(userId, userObject) {
  */
 export function listenToDatabase(path, callback) {
     const dbRef = ref(db, path);
-    onValue(dbRef, (snapshot) => {
-        const data = snapshot.val();
-        callback(data);
-    });
+    onValue(
+        dbRef,
+        (snapshot) => {
+            const data = snapshot.val();
+            callback(data);
+        },
+        (error) => {
+            console.error(error);
+        },
+    );
 }
 
 /**
