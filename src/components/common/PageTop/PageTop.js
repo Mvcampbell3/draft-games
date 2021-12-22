@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { setLoginModalOpen } from "../../../redux/actions";
 import { Link, useLocation } from "react-router-dom";
 import { Hero, Container, Tabs, Heading, Button } from "react-bulma-components";
+import { getAuth } from "@firebase/auth";
 import "./PageTop.scss";
 
 const PageTop = ({
@@ -13,6 +14,7 @@ const PageTop = ({
     loggedIn = false,
     setLoginModalOpen,
 }) => {
+    const auth = getAuth();
     const location = useLocation();
     const { pathname } = location;
 
@@ -36,6 +38,10 @@ const PageTop = ({
         setLoginModalOpen(true);
     };
 
+    const handleSignOutClick = () => {
+        auth.signOut();
+    };
+
     return (
         <Hero color={color} className="mb-4">
             <Hero.Body>
@@ -46,7 +52,15 @@ const PageTop = ({
                             <Heading subtitle>{subtitle}</Heading>
                         </div>
                         <div className="flex-container--right">
-                            <Button onClick={handleLoginClick}>Login</Button>
+                            {loggedIn ? (
+                                <Button onClick={handleSignOutClick}>
+                                    Sign Out
+                                </Button>
+                            ) : (
+                                <Button onClick={handleLoginClick}>
+                                    Login
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </Container>

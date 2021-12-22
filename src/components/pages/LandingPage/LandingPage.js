@@ -2,11 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import "./LandingPage.scss";
 import PageTop from "../../common/PageTop";
-import { getAuth } from "@firebase/auth";
-import { Button, Container } from "react-bulma-components";
 
-const LandingPage = ({ loggedIn = false }) => {
-    const auth = getAuth();
+const LandingPage = () => {
     return (
         <div className="page-container">
             <PageTop
@@ -14,28 +11,12 @@ const LandingPage = ({ loggedIn = false }) => {
                 subtitle="Eventually, things will go here"
                 color="info"
             />
-            {loggedIn && (
-                <Container>
-                    <Button
-                        onClick={() => {
-                            auth.signOut();
-                        }}
-                    >
-                        Sign Out
-                    </Button>
-                </Container>
-            )}
         </div>
     );
 };
 
-const mapStateToProps = (state, ownProps) => {
-    const {
-        appState: {
-            user: { loggedIn },
-        },
-    } = state;
-    return { loggedIn, ...ownProps };
+const mapStateToProps = () => {
+    return {};
 };
 
 export default connect(mapStateToProps)(LandingPage);

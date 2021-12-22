@@ -1,5 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./LoginModalContent.scss";
+
+// Redux actions
+import { setLoginModalOpen } from "../../../redux/actions";
 
 // Formik imports
 import { Formik } from "formik";
@@ -7,7 +11,34 @@ import initialValues from "./formik/initialValues";
 import validation from "./formik/validation";
 import { Form, Box, Button, Heading } from "react-bulma-components";
 
-const LoginModalContent = () => {
+// Firebase imports
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from "firebase/auth";
+
+import app, {
+    writeUserData,
+    listenToDatabase,
+    cleanUpDatabase,
+} from "../../../firebase";
+
+import { defaultUser } from "../../../firebase/defaultValues";
+
+const LoginModalContent = ({ setLoginModalOpen }) => {
+    const auth = getAuth(app);
+
+    const handleLoginSubmit = (email, password, setSubmitting) => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((result) => {
+                setSubmitting(false);
+                setLoginModalOpen(false);
+                console.log({ user: result.user });
+            })
+            .catch((err) => console.log({ err }));
+    };
+
     return (
         <Box className="modal-container">
             <Heading textAlign="center">
@@ -17,10 +48,11 @@ const LoginModalContent = () => {
                 initialValues={initialValues}
                 validate={validation}
                 onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
+                    handleLoginSubmit(
+                        values.email,
+                        values.password,
+                        setSubmitting,
+                    );
                 }}
             >
                 {({
@@ -78,4 +110,17 @@ const LoginModalContent = () => {
     );
 };
 
-export default LoginModalContent;
+const mapStateToProps = (state) => {
+    const {
+        appState: { loginModalOpen },
+    } = state;
+    return {
+        loginModalOpen,
+    };
+};
+
+const mapDispatchToProps = {
+    setLoginModalOpen,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModalContent);
