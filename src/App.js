@@ -1,24 +1,38 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { setUser, setLoginModalOpen } from "./redux/actions";
+import {
+    setUser,
+    setLoginModalOpen,
+    setLoadingModalOpen,
+} from "./redux/actions";
 
 // Pages
-import {
-    LandingPage,
-    CreateGamePage,
-} from "./components/pages";
+import { LandingPage, CreateGamePage } from "./components/pages";
 
 // Global Components
 import Modal from "./components/common/Modal";
 import LoginModalContent from "./components/common/LoginModalContent";
+import LoadingModalContent from "./components/common/LoadingModalContent";
 
 // firebase auth
 import app from "./firebase";
 import { getAuth } from "firebase/auth";
 
-const App = ({ setUser, loginModalOpen = false, setLoginModalOpen }) => {
+const App = ({
+    setUser,
+    loginModalOpen = false,
+    setLoginModalOpen,
+    loadingModalOpen = true,
+    setLoadingModalOpen,
+}) => {
     const auth = getAuth(app);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadingModalOpen(false);
+        }, 500);
+    }, []);
 
     useEffect(() => {
         const unsubscribeUser = auth.onAuthStateChanged(
@@ -56,6 +70,10 @@ const App = ({ setUser, loginModalOpen = false, setLoginModalOpen }) => {
             <Modal show={loginModalOpen} handleClose={handleLoginModalClose}>
                 <LoginModalContent />
             </Modal>
+            {/* Loading Modal */}
+            <Modal show={loadingModalOpen} className="modal-white">
+                <LoadingModalContent />
+            </Modal>
             <Switch>
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/create" component={CreateGamePage} />
@@ -66,14 +84,15 @@ const App = ({ setUser, loginModalOpen = false, setLoginModalOpen }) => {
 
 const mapStateToProps = (state) => {
     const {
-        appState: { loginModalOpen },
+        appState: { loginModalOpen, loadingModalOpen },
     } = state;
-    return { loginModalOpen };
+    return { loginModalOpen, loadingModalOpen };
 };
 
 const mapDispatchToProps = {
     setUser,
     setLoginModalOpen,
+    setLoadingModalOpen,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
