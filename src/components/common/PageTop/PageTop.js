@@ -59,10 +59,10 @@ const PageTop = ({
                     </div>
                 </Container>
             </Hero.Body>
-            {links.filter((link) => link.display).length > 1 && (
-                <Hero.Footer>
-                    <Tabs type="boxed" fullwidth>
-                        <Container>
+            <Hero.Footer>
+                <Tabs type="boxed" fullwidth>
+                    <Container>
+                        {links.filter((link) => link.display).length > 1 && (
                             <ul>
                                 {links
                                     .filter((link) => link.display)
@@ -79,10 +79,10 @@ const PageTop = ({
                                         </li>
                                     ))}
                             </ul>
-                        </Container>
-                    </Tabs>
-                </Hero.Footer>
-            )}
+                        )}
+                    </Container>
+                </Tabs>
+            </Hero.Footer>
         </Hero>
     );
 };
