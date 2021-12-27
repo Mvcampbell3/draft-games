@@ -12,3 +12,10 @@ export const setLoginModalOpen = (loginModalOpen) => {
     };
     return { type, payload };
 };
+export const setLoadingModalOpen = (loadingModalOpen) => {
+    const type = types.SET_LOADING_MODAL_OPEN;
+    const payload = {
+        loadingModalOpen,
+    };
+    return { type, payload };
+};

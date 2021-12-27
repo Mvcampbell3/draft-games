@@ -1,1 +1,8 @@
-@import 'bulma/css/bulma.min.css';
+$modal-white-background-background-color: rgba(255, 255, 255, 0.993);
+.modal-white {
+    .modal-background {
+        background-color: $modal-white-background-background-color;
+    }
+}
+
+@import "bulma/css/bulma.min.css";

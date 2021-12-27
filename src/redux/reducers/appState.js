@@ -1,10 +1,15 @@
-import { SET_USER, SET_LOGIN_MODAL_OPEN } from "../actions/actionTypes";
+import {
+    SET_USER,
+    SET_LOGIN_MODAL_OPEN,
+    SET_LOADING_MODAL_OPEN,
+} from "../actions/actionTypes";
 
 const intialState = {
     user: {
         loggedIn: false,
     },
     loginModalOpen: false,
+    loadingModalOpen: true,
 };
 
 export const appState = (state = intialState, action) => {
@@ -21,6 +26,14 @@ export const appState = (state = intialState, action) => {
             return {
                 ...state,
                 loginModalOpen,
+            };
+        }
+
+        case SET_LOADING_MODAL_OPEN: {
+            const { loadingModalOpen } = action.payload;
+            return {
+                ...state,
+                loadingModalOpen,
             };
         }
 
