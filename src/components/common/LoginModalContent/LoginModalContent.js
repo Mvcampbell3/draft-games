@@ -40,7 +40,7 @@ const LoginModalContent = ({ setLoginModalOpen }) => {
     };
 
     return (
-        <Box className="modal-container">
+        <div className="modal-inner-container">
             <Heading textAlign="center">
                 Login to your Draft Games account!
             </Heading>
@@ -106,7 +106,7 @@ const LoginModalContent = ({ setLoginModalOpen }) => {
                     </form>
                 )}
             </Formik>
-        </Box>
+        </div>
     );
 };
 
