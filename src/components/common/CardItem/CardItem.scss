@@ -1,0 +1,25 @@
+.card-item {
+    // html button wrapped
+    background-color: #3e8ed0; // bulma default "info" color
+    color: white;
+    border: none;
+    border-radius: 0.25em;
+    box-shadow: 2px 2px 2px rgba(51, 51, 51, 0.219);
+    text-align: left;
+    padding: 1em;
+    margin-bottom: 1em;
+    width: 400px;
+
+    &__title {
+        font-size: 24px;
+        margin-bottom: 0.5em;
+    }
+
+    &__description {
+        font-size: 20px;
+    }
+
+    @media screen and (max-width: 500px) {
+        width: 100%;
+    }
+}

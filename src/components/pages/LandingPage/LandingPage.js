@@ -2,11 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import "./LandingPage.scss";
 import PageTop from "../../common/PageTop";
-import { getAuth } from "@firebase/auth";
-import { Button, Container } from "react-bulma-components";
+import GameList from "./GameList";
 
-const LandingPage = ({ loggedIn = false }) => {
-    const auth = getAuth();
+const LandingPage = ({ loggedIn }) => {
     return (
         <div className="page-container">
             <PageTop
@@ -15,27 +13,22 @@ const LandingPage = ({ loggedIn = false }) => {
                 color="info"
             />
             {loggedIn && (
-                <Container>
-                    <Button
-                        onClick={() => {
-                            auth.signOut();
-                        }}
-                    >
-                        Sign Out
-                    </Button>
-                </Container>
+                <div>
+                    <h1>This is only seen when someone is logged in</h1>
+                    <GameList />
+                </div>
             )}
         </div>
     );
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     const {
         appState: {
-            user: { loggedIn },
+            user: { loggedIn = false },
         },
     } = state;
-    return { loggedIn, ...ownProps };
+    return { loggedIn };
 };
 
 export default connect(mapStateToProps)(LandingPage);

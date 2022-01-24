@@ -1,0 +1,37 @@
+.modal-loading-container {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    position: relative;
+
+    .spanner {
+        height: 70px;
+        width: 70px;
+        border-radius: 50px;
+        border: 10px solid;
+        position: absolute;
+        top: calc(50% - 35px);
+        left: calc(50% - 35px);
+
+        &.spanner-one {
+            border-color: transparent;
+        }
+
+        &.spanner-two {
+            border-color: transparent;
+            border-bottom-color: #3e8ed0;
+            border-left-color: #3e8ed0;
+            border-top-color: #3e8ed0;
+            animation: spanner-ani 0.75s linear infinite forwards;
+        }
+    }
+}
+
+@keyframes spanner-ani {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}

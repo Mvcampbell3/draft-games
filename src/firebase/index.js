@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, onValue, off } from "firebase/database";
+import { getDatabase, ref, set, push, onValue, off, remove } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -26,10 +26,16 @@ export function writeUserData(userId, userObject) {
  */
 export function listenToDatabase(path, callback) {
     const dbRef = ref(db, path);
-    onValue(dbRef, (snapshot) => {
-        const data = snapshot.val();
-        callback(data);
-    });
+    onValue(
+        dbRef,
+        (snapshot) => {
+            const data = snapshot.val();
+            callback(data);
+        },
+        (error) => {
+            console.error(error);
+        },
+    );
 }
 
 /**
@@ -40,6 +46,38 @@ export function listenToDatabase(path, callback) {
 export function cleanUpDatabase(path) {
     const dbRef = ref(db, path);
     off(dbRef, "value");
+}
+
+/**
+ * @name pushToDatabase
+ * @description add items to database lists
+ * @param {string} path to the database reference i.e. "gameList"
+ * @param {object} data object being pushed to the database
+ * @param {function} callback function to run after pushing is complete
+ */
+export function pushToDatabase(path, data, callback) {
+    const newRef = ref(db, path);
+    push(newRef, data)
+        .then((returnData) => {
+            if (typeof callback === "function") {
+                callback(returnData);
+            }
+        })
+        .catch((err) => console.log(err));
+}
+
+/**
+ * @name deleteFromDatabase
+ * @description removes item from database
+ * @param {*} path to the database reference i.e. "gameList/-item-id"
+ * @returns {Promise} nothing is passed through the .then function
+ */
+export function deleteFromDatabase(path) {
+    // instead of passing callback, returns the promise
+    // might want to make this the norm
+    // because callbacks are gross
+    const newRef = ref(db, path);
+    return remove(newRef);
 }
 
 export default app;

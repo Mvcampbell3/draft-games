@@ -37,6 +37,7 @@ import {
 const FirebaseTestingPage = () => {
     // callback function on what to do with the data we get back
     // passed to the listen function
+    // if this fails to run, check db security rules!!!
     const logOutData = (data) => {
         console.log({ data });
     };
