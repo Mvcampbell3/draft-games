@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { listenToDatabase, cleanUpDatabase } from "../../../firebase";
+import {
+    listenToDatabase,
+    cleanUpDatabase,
+    deleteFromDatabase,
+} from "../../../firebase";
 import CardItem from "../../common/CardItem";
 
 const GameList = () => {
@@ -28,7 +32,14 @@ const GameList = () => {
     }, []);
 
     const handleGameClick = (game) => {
-        console.log("this is the game that was clicked", { game });
+        // temp testing of deleting games from gameList
+        deleteFromDatabase(`gameList/${game.id}`)
+            .then((data) => {
+                console.log({ data });
+            })
+            .catch((err) => {
+                console.log({ err });
+            });
     };
 
     return (
