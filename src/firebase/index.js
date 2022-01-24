@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, onValue, off } from "firebase/database";
+import { getDatabase, ref, set, push, onValue, off } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -46,6 +46,24 @@ export function listenToDatabase(path, callback) {
 export function cleanUpDatabase(path) {
     const dbRef = ref(db, path);
     off(dbRef, "value");
+}
+
+/**
+ * @name pushToDatabase
+ * @description add items to database lists
+ * @param {string} path to the database reference i.e. "gameList"
+ * @param {object} data object being pushed to the database
+ * @param {function} callback function to run after pushing is complete
+ */
+export function pushToDatabase(path, data, callback) {
+    const newRef = ref(db, path);
+    push(newRef, data)
+        .then((returnData) => {
+            if (typeof callback === "function") {
+                callback(returnData);
+            }
+        })
+        .catch((err) => console.log(err));
 }
 
 export default app;
