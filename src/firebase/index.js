@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, push, onValue, off } from "firebase/database";
+import { getDatabase, ref, set, push, onValue, off, remove } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -64,6 +64,20 @@ export function pushToDatabase(path, data, callback) {
             }
         })
         .catch((err) => console.log(err));
+}
+
+/**
+ * @name deleteFromDatabase
+ * @description removes item from database
+ * @param {*} path to the database reference i.e. "gameList/-item-id"
+ * @returns {Promise} nothing is passed through the .then function
+ */
+export function deleteFromDatabase(path) {
+    // instead of passing callback, returns the promise
+    // might want to make this the norm
+    // because callbacks are gross
+    const newRef = ref(db, path);
+    return remove(newRef);
 }
 
 export default app;
