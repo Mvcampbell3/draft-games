@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { listenToDatabase, cleanUpDatabase } from "../../../firebase";
+import CardItem from "../../common/CardItem";
 
 const GameList = () => {
     const [games, setGames] = useState([]);
@@ -26,15 +27,27 @@ const GameList = () => {
         };
     }, []);
 
+    const handleGameClick = (game) => {
+        console.log("this is the game that was clicked", { game });
+    };
+
     return (
         <div className="game-list-container">
-            {games.map((game, i) => {
-                return (
-                    <div key={i} className="game-container">
-                        <h3>{game.title}</h3>
-                    </div>
-                );
-            })}
+            {games.length > 0 ? (
+                games.map((game, i) => {
+                    const cardProps = {
+                        ...game,
+                        handleClick: () => handleGameClick(game),
+                    };
+                    return (
+                        <div key={i} className="game-container">
+                            <CardItem {...cardProps} />
+                        </div>
+                    );
+                })
+            ) : (
+                <div>There are not any games :(</div>
+            )}
         </div>
     );
 };
